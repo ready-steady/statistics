@@ -10,11 +10,11 @@ import (
 //
 // https://en.wikipedia.org/wiki/Mean_squared_error
 func MSE(predicted, observed []float64) float64 {
-	var delta, sum float64
+	var sum, Δ float64
 
 	for i := range observed {
-		delta = predicted[i] - observed[i]
-		sum += delta * delta
+		Δ = predicted[i] - observed[i]
+		sum += Δ * Δ
 	}
 
 	return sum / float64(len(observed))
