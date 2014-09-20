@@ -1,8 +1,11 @@
-// Package corr provides functions for working with correlation coefficients.
+// Package corr provides functions for working with correlation coefficients
+// and correlation/covariance matrices.
 package corr
 
 import (
 	"math"
+
+	"github.com/go-math/stat/decomp"
 )
 
 // SpearmanPearson converts Spearman’s rank correlation coefficient into the
@@ -31,4 +34,42 @@ func KendallPearson(τ []float64) []float64 {
 	}
 
 	return r
+}
+
+// Decompose computes an m-by-n multiplier matrix M for an m-by-m covariance
+// matrix Σ such that, for an n-element vector X with uncorrelated components,
+// M * X is an m-element vector whose components are correlated according to Σ.
+// The function reduces the number of dimensions from m to n such that a
+// certain portion of the variance is preserved, which is controlled by
+// λ ∈ (0, 1].
+
+func Decompose(Σ []float64, m uint32, λ float64) ([]float64, uint32, error) {
+	U, Λ, err := decomp.CovPCA(Σ, m)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	n := m
+
+	// NOTE: Λ is in descending order and non-negative.
+	var cum, sum float64
+	for i := uint32(0); i < m; i++ {
+		sum += Λ[i]
+	}
+	for i := uint32(0); i < m; i++ {
+		cum += Λ[i]
+		if cum/sum >= λ {
+			n = i + 1
+			break
+		}
+	}
+
+	for i := uint32(0); i < n; i++ {
+		coef := math.Sqrt(Λ[i])
+		for j := uint32(0); j < m; j++ {
+			U[i*m+j] *= coef
+		}
+	}
+
+	return U[:m*n], n, nil
 }
