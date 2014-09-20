@@ -78,6 +78,12 @@ func TestCovPCA(t *testing.T) {
 	assert.AlmostEqual(abs(U), abs(expectedU), t)
 }
 
+func TestCovPCAFailure(t *testing.T) {
+	_, _, err := CovPCA([]float64{-1, 0, 0, 0, 1, 0, 0, 0, 1}, 3)
+
+	assert.Failure(err, t)
+}
+
 func abs(data []float64) []float64 {
 	for i := range data {
 		if data[i] < 0 {

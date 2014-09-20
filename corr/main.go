@@ -36,13 +36,11 @@ func KendallPearson(τ []float64) []float64 {
 	return r
 }
 
-// Decompose computes an m-by-n multiplier matrix M for an m-by-m covariance
-// matrix Σ such that, for an n-element vector X with uncorrelated components,
-// M * X is an m-element vector whose components are correlated according to Σ.
-// The function reduces the number of dimensions from m to n such that a
-// certain portion of the variance is preserved, which is controlled by
-// λ ∈ (0, 1].
-
+// Decompose computes an m-by-n matrix M for an m-by-m covariance matrix Σ such
+// that, for an n-element vector X with uncorrelated components, M * X is an
+// m-element vector whose components are correlated according to Σ. The
+// function reduces the number of dimensions from m to n such that a certain
+// portion of the variance is preserved, which is controlled by λ ∈ (0, 1].
 func Decompose(Σ []float64, m uint32, λ float64) ([]float64, uint32, error) {
 	U, Λ, err := decomp.CovPCA(Σ, m)
 	if err != nil {
