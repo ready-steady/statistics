@@ -5,7 +5,7 @@ package corr
 import (
 	"math"
 
-	"github.com/go-math/stat/decomp"
+	"github.com/go-math/stats/decomp"
 )
 
 // SpearmanPearson converts Spearman’s rank correlation coefficient into the
