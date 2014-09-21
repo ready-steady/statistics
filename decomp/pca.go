@@ -19,7 +19,7 @@ func CovPCA(Σ []float64, m uint32) (U []float64, Λ []float64, err error) {
 
 	for i := uint32(0); i < m; i++ {
 		if Λ[i] < 0 {
-			return nil, nil, errors.New("the matrix is not non-negative definite")
+			return nil, nil, errors.New("the matrix is not positive semidefinite")
 		}
 	}
 
