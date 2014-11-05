@@ -3,7 +3,7 @@ package decomp
 import (
 	"errors"
 
-	"github.com/go-math/linal/decomp"
+	"github.com/ready-steady/linal/decomp"
 )
 
 // CovPCA performs principal component analysis on an m-by-m covariance matrix.

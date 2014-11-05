@@ -3,7 +3,7 @@ package decomp
 import (
 	"testing"
 
-	"github.com/go-math/support/assert"
+	"github.com/ready-steady/support/assert"
 )
 
 func TestCovPCA(t *testing.T) {
