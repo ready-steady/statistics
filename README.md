@@ -1,5 +1,11 @@
 # Statistics
 
+The repository hosts three packages:
+
+* [assess](assess),
+* [corr](corr), and
+* [decomp](decomp).
+
 ## Contributing
 
 1. Fork the project.
