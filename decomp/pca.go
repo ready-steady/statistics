@@ -13,7 +13,7 @@ func CovPCA(Σ []float64, m uint32) (U []float64, Λ []float64, err error) {
 	U = make([]float64, m*m)
 	Λ = make([]float64, m)
 
-	if err = decomp.SymEigen(Σ, U, Λ, m); err != nil {
+	if err = decomp.SymEig(Σ, U, Λ, m); err != nil {
 		return nil, nil, err
 	}
 
