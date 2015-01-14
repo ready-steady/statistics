@@ -5,4 +5,4 @@ predicted by a model and the values actually observed.
 
 ## [Documentation][doc]
 
-[doc]: http://godoc.org/github.com/ready-steady/stats/assess
+[doc]: http://godoc.org/github.com/ready-steady/statistics/assess

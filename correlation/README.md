@@ -5,4 +5,4 @@ correlation/covariance matrices.
 
 ## [Documentation][doc]
 
-[doc]: http://godoc.org/github.com/ready-steady/stats/corr
+[doc]: http://godoc.org/github.com/ready-steady/statistics/correlation
