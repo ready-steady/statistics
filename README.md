@@ -3,8 +3,8 @@
 The repository hosts three packages:
 
 * [assess](assess),
-* [corr](corr), and
-* [decomp](decomp).
+* [correlation](correlation), and
+* [decomposition](decomposition).
 
 ## Contributing
 

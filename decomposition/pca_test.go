@@ -1,4 +1,4 @@
-package decomp
+package decomposition
 
 import (
 	"testing"

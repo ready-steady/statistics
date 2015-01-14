@@ -1,4 +1,4 @@
-package corr
+package correlation
 
 import (
 	"testing"
