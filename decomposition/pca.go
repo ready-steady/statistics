@@ -3,7 +3,7 @@ package decomposition
 import (
 	"errors"
 
-	"github.com/ready-steady/linal/decomposition"
+	"github.com/ready-steady/linear/decomposition"
 )
 
 // CovPCA performs principal component analysis on an m-by-m covariance matrix.
