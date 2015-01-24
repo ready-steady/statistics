@@ -42,14 +42,14 @@ func KendallPearson(τ []float64) []float64 {
 // function reduces the number of dimensions from m to n such that a certain
 // portion of the variance is preserved, which is controlled by λ ∈ (0, 1].
 func Decompose(Σ []float64, m uint32, λ float64) ([]float64, uint32, error) {
-	U, Λ, err := decomposition.CovPCA(Σ, m)
+	U, Λ, err := decomposition.CovPCA(Σ, m, math.Sqrt(math.Nextafter(1, 2) - 1))
 	if err != nil {
 		return nil, 0, err
 	}
 
 	n := m
 
-	// NOTE: Λ is in descending order and non-negative.
+	// NOTE: Λ is in descending order and nonnegative.
 	var cum, sum float64
 	for i := uint32(0); i < m; i++ {
 		sum += Λ[i]

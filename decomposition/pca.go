@@ -11,9 +11,9 @@ import (
 // descending order of the variances. By definition, the variances should be
 // nonnegative. Due to finite-precision arithmetics, however, some close-to-zero
 // variances might turn out to be negative. If the absolute value of a negative
-// variance is smaller than tolerance, the function nullifies that variance and
-// proceeds without any errors; otherwise, an error is returned.
-func CovPCA(Σ []float64, m uint32, tolerance float64) (U []float64, Λ []float64, err error) {
+// variance is smaller than the tolerance ε, the function nullifies that
+// variance and proceeds without any errors; otherwise, an error is returned.
+func CovPCA(Σ []float64, m uint32, ε float64) (U []float64, Λ []float64, err error) {
 	U = make([]float64, m*m)
 	Λ = make([]float64, m)
 
@@ -23,7 +23,7 @@ func CovPCA(Σ []float64, m uint32, tolerance float64) (U []float64, Λ []float6
 
 	for i := uint32(0); i < m; i++ {
 		if Λ[i] < 0 {
-			if -Λ[i] < tolerance {
+			if -Λ[i] < ε {
 				Λ[i] = 0.0
 			} else {
 				return nil, nil, errors.New("the matrix is not positive semidefinite")
