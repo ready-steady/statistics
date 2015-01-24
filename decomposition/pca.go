@@ -6,10 +6,14 @@ import (
 	"github.com/ready-steady/linear/decomposition"
 )
 
-// CovPCA performs principal component analysis on an m-by-m covariance matrix.
-// The principal components U and their variances Λ are returned in descending
-// order of Λ.
-func CovPCA(Σ []float64, m uint32) (U []float64, Λ []float64, err error) {
+// CovPCA performs principal component analysis on an m-by-m covariance matrix
+// Σ. The principal components U and their variances Λ are returned in
+// descending order of the variances. By definition, the variances should be
+// nonnegative. Due to finite-precision arithmetics, however, some close-to-zero
+// variances might turn out to be negative. If the absolute value of a negative
+// variance is smaller than tolerance, the function nullifies that variance and
+// proceeds without any errors; otherwise, an error is returned.
+func CovPCA(Σ []float64, m uint32, tolerance float64) (U []float64, Λ []float64, err error) {
 	U = make([]float64, m*m)
 	Λ = make([]float64, m)
 
@@ -19,7 +23,11 @@ func CovPCA(Σ []float64, m uint32) (U []float64, Λ []float64, err error) {
 
 	for i := uint32(0); i < m; i++ {
 		if Λ[i] < 0 {
-			return nil, nil, errors.New("the matrix is not positive semidefinite")
+			if -Λ[i] < tolerance {
+				Λ[i] = 0.0
+			} else {
+				return nil, nil, errors.New("the matrix is not positive semidefinite")
+			}
 		}
 	}
 
