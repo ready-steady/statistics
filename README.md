@@ -1,8 +1,9 @@
 # Statistics
 
-The repository hosts three packages:
+The repository hosts four packages:
 
 * [correlation](correlation),
+* [distribution](distribution),
 * [decomposition](decomposition), and
 * [metric](metric).
 
