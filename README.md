@@ -3,9 +3,10 @@
 The repository hosts four packages:
 
 * [correlation](correlation),
+* [decomposition](decomposition),
 * [distribution](distribution),
-* [decomposition](decomposition), and
-* [metric](metric).
+* [metric](metric), and
+* [test](test).
 
 ## Contributing
 
