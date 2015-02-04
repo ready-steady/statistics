@@ -1,9 +1,9 @@
 // Package distribution provides tools for working with empirical distributions.
 package distribution
 
-// CDF calculates an empirical cummulative distribution function. The
-// granularity of the function is specified by a set of edges. For n edges, the
-// function returns (n-1) points (see Histogram).
+// CDF calculates an empirical cumulative distribution function. The granularity
+// of the function is specified by a set of edges. For n edges, the function
+// returns (n-1) points (see Histogram).
 func CDF(data, edges []float64) []float64 {
 	bins := Histogram(data, edges)
 
