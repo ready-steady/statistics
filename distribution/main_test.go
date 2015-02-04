@@ -7,7 +7,7 @@ import (
 )
 
 func TestHistogram(t *testing.T) {
-	points := []float64{
+	data := []float64{
 		8.1472368639317894e-01, 9.0579193707561922e-01,
 		1.2698681629350606e-01, 9.1337585613901939e-01,
 		6.3235924622540951e-01, 9.7540404999409525e-02,
@@ -22,13 +22,13 @@ func TestHistogram(t *testing.T) {
 	edges := []float64{0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1}
 	bins := []uint{1, 3, 1, 0, 2, 1, 1, 1, 2, 8}
 
-	assert.Equal(bins, Histogram(points, edges), t)
+	assert.Equal(bins, Histogram(data, edges), t)
 }
 
 func TestFind(t *testing.T) {
 	edges := []float64{-2, -1, 0, 1, 2}
 
-	cases := []struct{
+	cases := []struct {
 		x float64
 		i int
 	}{

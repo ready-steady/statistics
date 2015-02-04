@@ -5,10 +5,10 @@ package distribution
 // specified by the given edges. For n edges, the number of bins is (n-1). The
 // left endpoint of a bin is assumed to belong to the bin while the right one is
 // assumed to do not.
-func Histogram(points []float64, edges []float64) []uint {
+func Histogram(data []float64, edges []float64) []uint {
 	bins := make([]uint, len(edges)-1)
 
-	for _, x := range points {
+	for _, x := range data {
 		if i := find(x, edges); i != -1 {
 			bins[i]++
 		}

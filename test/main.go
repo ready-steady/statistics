@@ -10,15 +10,16 @@ import (
 // KolmogorovSmirnov performs the Kolmogorov–Smirnov test. The null hypothesis
 // is that the data in two data sets are comming from the same continuous
 // distribution. The α parameters specifies the significance level.
-func KolmogorovSmirnov(points1, points2 []float64, α float64) (bool, float64) {
+func KolmogorovSmirnov(data1, data2 []float64, α float64) (bool, float64) {
 	const (
 		terms = 101
 	)
 
-	pc1, pc2 := len(points1), len(points2)
+	pc1, pc2 := len(data1), len(data2)
 	γ := math.Sqrt(float64(pc1*pc2) / float64(pc1+pc2))
 
-	Δ := computeDistance(points1, points2)
+	edges := computeEdges(data1, data2)
+	Δ := computeInfNorm(computeCDF(data1, edges), computeCDF(data2, edges))
 
 	λ2 := (γ + 0.12 + 0.11/γ) * Δ
 	if λ2 < 0 {
@@ -44,36 +45,15 @@ func KolmogorovSmirnov(points1, points2 []float64, α float64) (bool, float64) {
 	return α >= p, p
 }
 
-func computeDistance(points1, points2 []float64) float64 {
-	edges := computeEdges(points1, points2)
-
-	cdf1 := computeCDF(points1, edges)
-	cdf2 := computeCDF(points2, edges)
-
-	var δ, Δ float64
-
-	for i := range cdf1 {
-		δ = cdf1[i] - cdf2[i]
-		if δ < 0 {
-			δ = -δ
-		}
-		if δ > Δ {
-			Δ = δ
-		}
-	}
-
-	return Δ
-}
-
-func computeEdges(points1, points2 []float64) []float64 {
-	pc1, pc2 := len(points1), len(points2)
+func computeEdges(data1, data2 []float64) []float64 {
+	pc1, pc2 := len(data1), len(data2)
 	pc := pc1 + pc2
 
 	edges := make([]float64, pc+2)
 
 	edges[0] = math.Inf(-1)
-	copy(edges[1:], points1)
-	copy(edges[1+pc1:], points2)
+	copy(edges[1:], data1)
+	copy(edges[1+pc1:], data2)
 	edges[pc+1] = -edges[0]
 
 	sort.Float64s(edges)
@@ -81,8 +61,8 @@ func computeEdges(points1, points2 []float64) []float64 {
 	return edges
 }
 
-func computeCDF(points, edges []float64) []float64 {
-	bins := distribution.Histogram(points, edges)
+func computeCDF(data, edges []float64) []float64 {
+	bins := distribution.Histogram(data, edges)
 
 	total := uint(0)
 	for _, count := range bins {
@@ -98,4 +78,20 @@ func computeCDF(points, edges []float64) []float64 {
 	}
 
 	return cdf
+}
+
+func computeInfNorm(data1, data2 []float64) float64 {
+	var δ, Δ float64
+
+	for i := range data1 {
+		δ = data1[i] - data2[i]
+		if δ < 0 {
+			δ = -δ
+		}
+		if δ > Δ {
+			Δ = δ
+		}
+	}
+
+	return Δ
 }
