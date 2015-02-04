@@ -10,7 +10,9 @@ import (
 
 // KolmogorovSmirnov performs the Kolmogorov–Smirnov test. The null hypothesis
 // is that the data in two data sets are comming from the same continuous
-// distribution. The α parameters specifies the significance level.
+// distribution. The test tries to reject the null hypothesis, and the function
+// returns true if the null hypothesis has been rejected. The α parameters
+// specifies the significance level.
 func KolmogorovSmirnov(data1, data2 []float64, α float64) (bool, float64) {
 	const (
 		terms = 101

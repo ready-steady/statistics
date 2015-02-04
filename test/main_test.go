@@ -33,9 +33,9 @@ func TestKolmogorovSmirnovGaussian(t *testing.T) {
 		-1.1742123314568162e+00, -1.9223951753927476e-01,
 	}
 
-	passed, pvalue := KolmogorovSmirnov(data1, data2, 0.05)
+	rejected, pvalue := KolmogorovSmirnov(data1, data2, 0.05)
 
-	assert.Equal(passed, false, t)
+	assert.Equal(rejected, false, t)
 	assert.AlmostEqual(pvalue, 7.7095294467658659e-01, t)
 }
 
@@ -96,8 +96,8 @@ func TestKolmogorovSmirnovWeibull(t *testing.T) {
 		2.9032385714734148e+00, 8.3367741780056803e-01,
 	}
 
-	passed, pvalue := KolmogorovSmirnov(data1, data2, 0.01)
+	rejected, pvalue := KolmogorovSmirnov(data1, data2, 0.01)
 
-	assert.Equal(passed, false, t)
+	assert.Equal(rejected, false, t)
 	assert.AlmostEqual(pvalue, 3.1660846051790786e-02, t)
 }
