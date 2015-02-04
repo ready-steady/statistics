@@ -4,6 +4,7 @@ import (
 	"math"
 	"sort"
 
+	"github.com/ready-steady/linear/metric"
 	"github.com/ready-steady/statistics/distribution"
 )
 
@@ -19,7 +20,7 @@ func KolmogorovSmirnov(data1, data2 []float64, α float64) (bool, float64) {
 	γ := math.Sqrt(float64(pc1*pc2) / float64(pc1+pc2))
 
 	edges := computeEdges(data1, data2)
-	Δ := computeInfNorm(computeCDF(data1, edges), computeCDF(data2, edges))
+	Δ := metric.Uniform(distribution.CDF(data1, edges), distribution.CDF(data2, edges))
 
 	λ2 := (γ + 0.12 + 0.11/γ) * Δ
 	if λ2 < 0 {
@@ -59,39 +60,4 @@ func computeEdges(data1, data2 []float64) []float64 {
 	sort.Float64s(edges)
 
 	return edges
-}
-
-func computeCDF(data, edges []float64) []float64 {
-	bins := distribution.Histogram(data, edges)
-
-	total := uint(0)
-	for _, count := range bins {
-		total += count
-	}
-
-	cdf := make([]float64, len(bins))
-	for i := range cdf {
-		cdf[i] = float64(bins[i]) / float64(total)
-		if i > 0 {
-			cdf[i] += cdf[i-1]
-		}
-	}
-
-	return cdf
-}
-
-func computeInfNorm(data1, data2 []float64) float64 {
-	var δ, Δ float64
-
-	for i := range data1 {
-		δ = data1[i] - data2[i]
-		if δ < 0 {
-			δ = -δ
-		}
-		if δ > Δ {
-			Δ = δ
-		}
-	}
-
-	return Δ
 }
