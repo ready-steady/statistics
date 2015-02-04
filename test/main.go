@@ -16,34 +16,34 @@ func KolmogorovSmirnov(data1, data2 []float64, α float64) (bool, float64) {
 		terms = 101
 	)
 
-	pc1, pc2 := len(data1), len(data2)
-	γ := math.Sqrt(float64(pc1*pc2) / float64(pc1+pc2))
-
 	edges := computeEdges(data1, data2)
 	Δ := metric.Uniform(distribution.CDF(data1, edges), distribution.CDF(data2, edges))
 
-	λ2 := (γ + 0.12 + 0.11/γ) * Δ
-	if λ2 < 0 {
-		λ2 = 0
-	}
-	λ2 *= λ2
+	// M. Stephens. Use of the Kolmogorov–Smirnov, Cramer-Von Mises and Related
+	// Statistics Without Extensive Tables. Journal of the Royal Statistical
+	// Society. Series B (Methodological), vol. 32, no. 1 (1970), pp. 115–122.
+	//
+	// http://www.jstor.org/stable/2984408
+	pc1, pc2 := len(data1), len(data2)
+	γ := math.Sqrt(float64(pc1*pc2) / float64(pc1+pc2))
+	Δ = (γ + 0.12 + 0.11/γ) * Δ
 
-	p := 0.0
-
-	flip, flop := 1.0, 1.0
+	// Kolmogorov distribution
+	//
+	// https://en.wikipedia.org/wiki/Kolmogorov–Smirnov_test#Kolmogorov_distribution
+	q, sign, k := 0.0, 1.0, 1.0
 	for i := 0; i < terms; i++ {
-		p += flip * math.Exp(-2*λ2*flop*flop)
-		flip, flop = -flip, flop+1
+		q += sign * math.Exp(-2*Δ*Δ*k*k)
+		sign, k = -sign, k+1
+	}
+	q *= 2
+	if q < 0 {
+		q = 0
+	} else if q > 1 {
+		q = 1
 	}
 
-	p *= 2
-	if p < 0 {
-		p = 0
-	} else if p > 1 {
-		p = 1
-	}
-
-	return α >= p, p
+	return α >= q, q
 }
 
 func computeEdges(data1, data2 []float64) []float64 {
