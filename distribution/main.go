@@ -8,16 +8,14 @@ func CDF(data, edges []float64) []float64 {
 	bins := Histogram(data, edges)
 
 	total := uint(0)
-	for _, count := range bins {
+	for i, count := range bins {
 		total += count
+		bins[i] = total
 	}
 
 	values := make([]float64, len(bins))
 	for i := range values {
 		values[i] = float64(bins[i]) / float64(total)
-		if i > 0 {
-			values[i] += values[i-1]
-		}
 	}
 
 	return values
