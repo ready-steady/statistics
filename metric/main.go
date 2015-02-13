@@ -9,7 +9,7 @@ import (
 // MSE computes the mean-square error.
 //
 // https://en.wikipedia.org/wiki/Mean_squared_error
-func MSE(predictions, observations []float64) float64 {
+func MSE(observations, predictions []float64) float64 {
 	var sum, Δ float64
 
 	for i := range observations {
@@ -23,14 +23,14 @@ func MSE(predictions, observations []float64) float64 {
 // RMSE computes the root-mean-square error.
 //
 // https://en.wikipedia.org/wiki/Root-mean-square_deviation
-func RMSE(predictions, observations []float64) float64 {
-	return math.Sqrt(MSE(predictions, observations))
+func RMSE(observations, predictions []float64) float64 {
+	return math.Sqrt(MSE(observations, predictions))
 }
 
 // NRMSE computes the normalized root-mean-square error.
 //
 // https://en.wikipedia.org/wiki/Root-mean-square_deviation#Normalized_root-mean-square_deviation
-func NRMSE(predictions, observations []float64) float64 {
+func NRMSE(observations, predictions []float64) float64 {
 	count := len(observations)
 	if count == 0 {
 		return 0
@@ -46,5 +46,5 @@ func NRMSE(predictions, observations []float64) float64 {
 		}
 	}
 
-	return RMSE(predictions, observations) / (max - min)
+	return RMSE(observations, predictions) / (max - min)
 }
