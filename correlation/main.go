@@ -41,7 +41,7 @@ func KendallPearson(τ []float64) []float64 {
 // m-element vector whose components are correlated according to Σ. The
 // function reduces the number of dimensions from m to n such that a certain
 // portion of the variance is preserved, which is controlled by λ ∈ (0, 1].
-func Decompose(Σ []float64, m uint32, λ float64) ([]float64, uint32, error) {
+func Decompose(Σ []float64, m uint, λ float64) ([]float64, uint, error) {
 	U, Λ, err := decomposition.CovPCA(Σ, m, math.Sqrt(math.Nextafter(1, 2)-1))
 	if err != nil {
 		return nil, 0, err
@@ -51,10 +51,10 @@ func Decompose(Σ []float64, m uint32, λ float64) ([]float64, uint32, error) {
 
 	// NOTE: Λ is in descending order and nonnegative.
 	var cum, sum float64
-	for i := uint32(0); i < m; i++ {
+	for i := uint(0); i < m; i++ {
 		sum += Λ[i]
 	}
-	for i := uint32(0); i < m; i++ {
+	for i := uint(0); i < m; i++ {
 		cum += Λ[i]
 		if cum/sum >= λ {
 			n = i + 1
@@ -62,9 +62,9 @@ func Decompose(Σ []float64, m uint32, λ float64) ([]float64, uint32, error) {
 		}
 	}
 
-	for i := uint32(0); i < n; i++ {
+	for i := uint(0); i < n; i++ {
 		coef := math.Sqrt(Λ[i])
-		for j := uint32(0); j < m; j++ {
+		for j := uint(0); j < m; j++ {
 			U[i*m+j] *= coef
 		}
 	}

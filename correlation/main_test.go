@@ -7,7 +7,7 @@ import (
 )
 
 func TestDecompose(t *testing.T) {
-	m := uint32(5)
+	m := uint(5)
 
 	C := []float64{
 		+1.000000000000000e+00,
@@ -72,7 +72,7 @@ func TestDecompose(t *testing.T) {
 
 	M, n, _ = Decompose(C, m, 0.75)
 
-	assert.Equal(n, uint32(2), t)
+	assert.Equal(n, uint(2), t)
 	assert.AlmostEqual(abs(M), abs(expectedM[:m*2]), t)
 }
 

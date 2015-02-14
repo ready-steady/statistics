@@ -13,7 +13,7 @@ import (
 // variances might turn out to be negative. If the absolute value of a negative
 // variance is smaller than the tolerance ε, the function nullifies that
 // variance and proceeds without any errors; otherwise, an error is returned.
-func CovPCA(Σ []float64, m uint32, ε float64) (U []float64, Λ []float64, err error) {
+func CovPCA(Σ []float64, m uint, ε float64) (U []float64, Λ []float64, err error) {
 	U = make([]float64, m*m)
 	Λ = make([]float64, m)
 
@@ -21,7 +21,7 @@ func CovPCA(Σ []float64, m uint32, ε float64) (U []float64, Λ []float64, err 
 		return nil, nil, err
 	}
 
-	for i := uint32(0); i < m; i++ {
+	for i := uint(0); i < m; i++ {
 		if Λ[i] < 0 {
 			if -Λ[i] < ε {
 				Λ[i] = 0.0
@@ -32,9 +32,9 @@ func CovPCA(Σ []float64, m uint32, ε float64) (U []float64, Λ []float64, err 
 	}
 
 	// NOTE: Λ is in ascending order. Reverse!
-	for i, j := uint32(0), m-1; i < j; i, j = i+1, j-1 {
+	for i, j := uint(0), m-1; i < j; i, j = i+1, j-1 {
 		Λ[i], Λ[j] = Λ[j], Λ[i]
-		for k := uint32(0); k < m; k++ {
+		for k := uint(0); k < m; k++ {
 			U[i*m+k], U[j*m+k] = U[j*m+k], U[i*m+k]
 		}
 	}
