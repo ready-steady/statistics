@@ -68,12 +68,12 @@ func TestDecompose(t *testing.T) {
 	M, n, _ := Decompose(C, m, 1)
 
 	assert.Equal(n, m, t)
-	assert.AlmostEqual(abs(M), abs(expectedM), t)
+	assert.EqualWithin(abs(M), abs(expectedM), 2e-15, t)
 
 	M, n, _ = Decompose(C, m, 0.75)
 
 	assert.Equal(n, uint(2), t)
-	assert.AlmostEqual(abs(M), abs(expectedM[:m*2]), t)
+	assert.EqualWithin(abs(M), abs(expectedM[:m*2]), 1e-15, t)
 }
 
 func abs(data []float64) []float64 {

@@ -74,8 +74,8 @@ func TestCovPCA(t *testing.T) {
 	U, Λ, err := CovPCA(C, 5, 0)
 
 	assert.Success(err, t)
-	assert.AlmostEqual(Λ, expectedΛ, t)
-	assert.AlmostEqual(abs(U), abs(expectedU), t)
+	assert.EqualWithin(Λ, expectedΛ, 1e-15, t)
+	assert.EqualWithin(abs(U), abs(expectedU), 1e-15, t)
 }
 
 func TestCovPCAFailure(t *testing.T) {

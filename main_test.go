@@ -15,7 +15,7 @@ func TestMean(t *testing.T) {
 		+3.5783969397257605e+00, +2.7694370298848772e+00,
 	}
 
-	assert.AlmostEqual(Mean(data), 6.2428219709029698e-01, t)
+	assert.EqualWithin(Mean(data), 6.2428219709029698e-01, 1e-15, t)
 }
 
 func TestVariance(t *testing.T) {
@@ -27,5 +27,5 @@ func TestVariance(t *testing.T) {
 		+3.5783969397257605e+00, +2.7694370298848772e+00,
 	}
 
-	assert.AlmostEqual(Variance(data), 3.1324921339484746e+00, t)
+	assert.EqualWithin(Variance(data), 3.1324921339484746e+00, 1e-15, t)
 }
