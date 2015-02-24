@@ -4,9 +4,9 @@ The package provides functions used in mathematical statistics.
 
 ## [Documentation][doc]
 
-## Nested Packages
+## Subpackages
 
-The repository hosts five nested packages:
+The package contains five subpackages:
 
 * [correlation](correlation),
 * [decomposition](decomposition),
