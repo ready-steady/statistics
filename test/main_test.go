@@ -3,7 +3,7 @@ package test
 import (
 	"testing"
 
-	"github.com/ready-steady/support/assert"
+	"github.com/ready-steady/assert"
 )
 
 func TestKolmogorovSmirnovGaussian(t *testing.T) {

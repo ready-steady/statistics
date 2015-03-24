@@ -3,7 +3,7 @@ package statistics
 import (
 	"testing"
 
-	"github.com/ready-steady/support/assert"
+	"github.com/ready-steady/assert"
 )
 
 func TestMean(t *testing.T) {
