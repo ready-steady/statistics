@@ -3,7 +3,7 @@ package decomposition
 import (
 	"errors"
 
-	"github.com/ready-steady/linear/decomposition"
+	"github.com/ready-steady/linear/matrix"
 )
 
 // CovPCA performs principal component analysis on an m-by-m covariance matrix
@@ -17,7 +17,7 @@ func CovPCA(Σ []float64, m uint, ε float64) (U []float64, Λ []float64, err er
 	U = make([]float64, m*m)
 	Λ = make([]float64, m)
 
-	if err = decomposition.SymEig(Σ, U, Λ, m); err != nil {
+	if err = matrix.SymmetricEigen(Σ, U, Λ, m); err != nil {
 		return nil, nil, err
 	}
 
