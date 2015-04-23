@@ -2,10 +2,8 @@ package test
 
 import (
 	"math"
-	"sort"
 
-	"github.com/ready-steady/linear/metric"
-	"github.com/ready-steady/statistics/distribution"
+	"github.com/ready-steady/statistics/metric"
 )
 
 // KolmogorovSmirnov performs the two-sample Kolmogorov–Smirnov test. The null
@@ -19,9 +17,7 @@ func KolmogorovSmirnov(data1, data2 []float64, α float64) (bool, float64, float
 		terms = 101
 	)
 
-	edges := computeEdges(data1, data2)
-	statistic := metric.Uniform(distribution.CDF(data1, edges),
-		distribution.CDF(data2, edges))
+	statistic := metric.KolmogorovSmirnov(data1, data2)
 
 	// M. Stephens. Use of the Kolmogorov–Smirnov, Cramer-Von Mises and Related
 	// Statistics Without Extensive Tables. Journal of the Royal Statistical
@@ -48,20 +44,4 @@ func KolmogorovSmirnov(data1, data2 []float64, α float64) (bool, float64, float
 	}
 
 	return α >= pvalue, pvalue, statistic
-}
-
-func computeEdges(data1, data2 []float64) []float64 {
-	n1, n2 := len(data1), len(data2)
-	n := n1 + n2
-
-	edges := make([]float64, n+2)
-
-	edges[0] = math.Inf(-1)
-	copy(edges[1:], data1)
-	copy(edges[1+n1:], data2)
-	edges[n+1] = -edges[0]
-
-	sort.Float64s(edges)
-
-	return edges
 }
