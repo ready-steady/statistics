@@ -17,6 +17,25 @@ func KolmogorovSmirnov(data1, data2 []float64) float64 {
 		distribution.CDF(data2, edges))
 }
 
+// KullbackLeibler computes the Kullback–Leibler divergence.
+//
+// https://en.wikipedia.org/wiki/Kullback–Leibler_divergence
+func KullbackLeibler(pdata, qdata []float64) float64 {
+	edges := detect(pdata, qdata)
+
+	pcdf := distribution.CDF(pdata, edges)
+	qcdf := distribution.CDF(qdata, edges)
+
+	divergence := 0.0
+	for i := range pcdf {
+		if pcdf[i] > 0 && qcdf[i] > 0 {
+			divergence += pcdf[i] * math.Log(pcdf[i]/qcdf[i])
+		}
+	}
+
+	return divergence
+}
+
 func detect(data1, data2 []float64) []float64 {
 	n1, n2 := len(data1), len(data2)
 	n := n1 + n2
