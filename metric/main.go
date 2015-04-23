@@ -32,9 +32,6 @@ func RMSE(observations, predictions []float64) float64 {
 // https://en.wikipedia.org/wiki/Root-mean-square_deviation#Normalized_root-mean-square_deviation
 func NRMSE(observations, predictions []float64) float64 {
 	count := len(observations)
-	if count == 0 {
-		return 0
-	}
 
 	min, max := observations[0], observations[0]
 	for i := 1; i < count; i++ {
