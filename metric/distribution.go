@@ -10,7 +10,7 @@ import (
 
 // KolmogorovSmirnov computes the Kolmogorov–Smirnov statistic.
 //
-// https://en.wikipedia.org/wiki/Kolmogorov–Smirnov_test
+// https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
 func KolmogorovSmirnov(data1, data2 []float64) float64 {
 	edges := detect(data1, data2)
 	return metric.Uniform(distribution.CDF(data1, edges),
@@ -19,7 +19,7 @@ func KolmogorovSmirnov(data1, data2 []float64) float64 {
 
 // KullbackLeibler computes the Kullback–Leibler divergence.
 //
-// https://en.wikipedia.org/wiki/Kullback–Leibler_divergence
+// https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
 func KullbackLeibler(pdata, qdata []float64) float64 {
 	edges := detect(pdata, qdata)
 
