@@ -1,5 +1,4 @@
-// Package metric provides functions for measuring the difference between the
-// values predicted by a model and the values actually observed.
+// Package metric provides functions for comparing datasets.
 package metric
 
 import (
@@ -9,22 +8,22 @@ import (
 // MSE computes the mean-square error.
 //
 // https://en.wikipedia.org/wiki/Mean_squared_error
-func MSE(observations, predictions []float64) float64 {
+func MSE(data1, data2 []float64) float64 {
 	var sum, Δ float64
 
-	for i := range observations {
-		Δ = predictions[i] - observations[i]
+	for i := range data1 {
+		Δ = data2[i] - data1[i]
 		sum += Δ * Δ
 	}
 
-	return sum / float64(len(observations))
+	return sum / float64(len(data1))
 }
 
 // RMSE computes the root-mean-square error.
 //
 // https://en.wikipedia.org/wiki/Root-mean-square_deviation
-func RMSE(observations, predictions []float64) float64 {
-	return math.Sqrt(MSE(observations, predictions))
+func RMSE(data1, data2 []float64) float64 {
+	return math.Sqrt(MSE(data1, data2))
 }
 
 // NRMSE computes the normalized root-mean-square error.
