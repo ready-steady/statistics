@@ -12,6 +12,8 @@ import (
 // rejects the null hypothesis, the function returns true; otherwise, false is
 // returned. The second and third outputs of the function are the p-value and
 // Kolmogorov–Smirnov statistic of the test, respectively.
+//
+// https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
 func KolmogorovSmirnov(data1, data2 []float64, α float64) (bool, float64, float64) {
 	const (
 		terms = 101
@@ -30,7 +32,7 @@ func KolmogorovSmirnov(data1, data2 []float64, α float64) (bool, float64, float
 
 	// Kolmogorov distribution
 	//
-	// https://en.wikipedia.org/wiki/Kolmogorov–Smirnov_test#Kolmogorov_distribution
+	// https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test#Kolmogorov_distribution
 	pvalue, sign, k := 0.0, 1.0, 1.0
 	for i := 0; i < terms; i++ {
 		pvalue += sign * math.Exp(-2*λ*λ*k*k)
