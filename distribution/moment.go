@@ -1,5 +1,4 @@
-// Package statistics provides functions used in mathematical statistics.
-package statistics
+package distribution
 
 // Mean computes an estimate of the population mean from a finite sample.
 func Mean(data []float64) float64 {

@@ -1,4 +1,5 @@
-// Package distribution provides tools for working with empirical distributions.
+// Package distribution provides functions for working with empirical
+// distributions.
 package distribution
 
 // CDF calculates an empirical cumulative distribution function. The granularity

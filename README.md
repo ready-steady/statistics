@@ -1,12 +1,6 @@
 # Statistics
 
-The package provides functions used in mathematical statistics.
-
-## [Documentation][doc]
-
-## Subpackages
-
-The package contains five subpackages:
+The repository hosts five packages:
 
 * [correlation](correlation),
 * [decomposition](decomposition),
@@ -19,5 +13,3 @@ The package contains five subpackages:
 1. Fork the project.
 2. Implement your idea.
 3. Create a pull request.
-
-[doc]: http://godoc.org/github.com/ready-steady/statistics
