@@ -1,6 +1,6 @@
 # Distribution
 
-The package provides tools for analyzing empirical distributions.
+The package provides tools for working with empirical distributions.
 
 ## [Documentation][doc]
 
