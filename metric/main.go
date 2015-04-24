@@ -8,39 +8,39 @@ import (
 // MSE computes the mean-square error.
 //
 // https://en.wikipedia.org/wiki/Mean_squared_error
-func MSE(data1, data2 []float64) float64 {
+func MSE(y, yhat []float64) float64 {
 	var sum, Δ float64
 
-	for i := range data1 {
-		Δ = data2[i] - data1[i]
+	for i := range y {
+		Δ = yhat[i] - y[i]
 		sum += Δ * Δ
 	}
 
-	return sum / float64(len(data1))
+	return sum / float64(len(y))
 }
 
 // RMSE computes the root-mean-square error.
 //
 // https://en.wikipedia.org/wiki/Root-mean-square_deviation
-func RMSE(data1, data2 []float64) float64 {
-	return math.Sqrt(MSE(data1, data2))
+func RMSE(y, yhat []float64) float64 {
+	return math.Sqrt(MSE(y, yhat))
 }
 
 // NRMSE computes the normalized root-mean-square error.
 //
 // https://en.wikipedia.org/wiki/Root-mean-square_deviation#Normalized_root-mean-square_deviation
-func NRMSE(observations, predictions []float64) float64 {
-	count := len(observations)
+func NRMSE(y, yhat []float64) float64 {
+	count := len(y)
 
-	min, max := observations[0], observations[0]
+	min, max := y[0], y[0]
 	for i := 1; i < count; i++ {
-		if observations[i] < min {
-			min = observations[i]
+		if y[i] < min {
+			min = y[i]
 		}
-		if observations[i] > max {
-			max = observations[i]
+		if y[i] > max {
+			max = y[i]
 		}
 	}
 
-	return RMSE(observations, predictions) / (max - min)
+	return RMSE(y, yhat) / (max - min)
 }
