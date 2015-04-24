@@ -3,6 +3,10 @@ package metric
 
 import (
 	"math"
+	"sort"
+
+	"github.com/ready-steady/linear/metric"
+	"github.com/ready-steady/statistics/distribution"
 )
 
 // MSE computes the mean-square error.
@@ -43,4 +47,62 @@ func NRMSE(y, yhat []float64) float64 {
 	}
 
 	return RMSE(y, yhat) / (max - min)
+}
+
+// KolmogorovSmirnov computes the Kolmogorov–Smirnov statistic for two samples.
+//
+// https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
+func KolmogorovSmirnov(data1, data2 []float64) float64 {
+	edges := detect(data1, data2)
+
+	cdf1 := distribution.CDF(data1, edges)
+	cdf2 := distribution.CDF(data2, edges)
+
+	return metric.Uniform(cdf1, cdf2)
+}
+
+// KullbackLeibler computes the Kullback–Leibler divergence of `q` from `p`
+// where `p` and `q` are two discrete probability distributions. The
+// distribution `p` is assumed to be absolutely continuous with respect the
+// distribution `q`, that is, `q[i] = 0` implies that `p[i] = 0`.
+//
+// https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
+func KullbackLeibler(p, q []float64) float64 {
+	divergence := 0.0
+	for i := range p {
+		if p[i] > 0 {
+			divergence += p[i] * math.Log(p[i]/q[i])
+		}
+	}
+	return divergence
+}
+
+func detect(data1, data2 []float64) []float64 {
+	n1, n2 := len(data1), len(data2)
+	n := n1 + n2
+
+	edges := make([]float64, n+2)
+	edges[0] = math.Inf(-1)
+	edges[1] = -edges[0]
+	copy(edges[2:], data1)
+	copy(edges[2+n1:], data2)
+
+	edges = edges[:unique(edges)]
+	sort.Float64s(edges)
+
+	return edges
+}
+
+func unique(data []float64) int {
+	n := len(data) - 1
+	for i := 0; i < n; i++ {
+		for j := i + 1; j <= n; j++ {
+			if data[i] == data[j] {
+				data[j] = data[n]
+				n--
+				j--
+			}
+		}
+	}
+	return n + 1
 }
