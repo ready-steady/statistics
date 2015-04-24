@@ -1,2 +1,2 @@
-// Package decomposition provides algorithms for analyzing and decomposing data.
+// Package decomposition provides algorithms for decomposing data.
 package decomposition
