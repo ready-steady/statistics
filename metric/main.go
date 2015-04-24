@@ -61,10 +61,10 @@ func KolmogorovSmirnov(data1, data2 []float64) float64 {
 	return metric.Uniform(cdf1, cdf2)
 }
 
-// KullbackLeibler computes the Kullback–Leibler divergence of `q` from `p`
-// where `p` and `q` are two discrete probability distributions. The
-// distribution `p` is assumed to be absolutely continuous with respect the
-// distribution `q`, that is, `q[i] = 0` implies that `p[i] = 0`.
+// KullbackLeibler computes the Kullback–Leibler divergence of q from p where p
+// and q are two discrete probability distributions. The distribution p is
+// assumed to be absolutely continuous with respect the distribution q, that is,
+// q[i] = 0 implies that p[i] = 0.
 //
 // https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
 func KullbackLeibler(p, q []float64) float64 {
