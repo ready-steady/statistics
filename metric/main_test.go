@@ -3,7 +3,6 @@ package metric
 import (
 	"math"
 	"math/rand"
-	"sort"
 	"testing"
 
 	"github.com/ready-steady/assert"
@@ -19,12 +18,8 @@ func TestDetect(t *testing.T) {
 }
 
 func TestUnique(t *testing.T) {
-	data := []float64{0, 1, 2, 3, 1, 2, 1, 4, 5, 0}
-
-	data = data[:unique(data)]
-	sort.Float64s(data)
-
-	assert.Equal(data, []float64{0, 1, 2, 3, 4, 5}, t)
+	data := []float64{0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 4, 5, 5}
+	assert.Equal(data[:unique(data)], []float64{0, 1, 2, 4, 5}, t)
 }
 
 func BenchmarkDetect(b *testing.B) {

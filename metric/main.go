@@ -82,27 +82,24 @@ func detect(data1, data2 []float64) []float64 {
 	n := n1 + n2
 
 	edges := make([]float64, n+2)
-	edges[0] = math.Inf(-1)
-	edges[1] = -edges[0]
-	copy(edges[2:], data1)
-	copy(edges[2+n1:], data2)
 
-	edges = edges[:unique(edges)]
+	edges[0] = math.Inf(-1)
+	copy(edges[1:], data1)
+	copy(edges[1+n1:], data2)
+	edges[n+1] = -edges[0]
+
 	sort.Float64s(edges)
 
-	return edges
+	return edges[:unique(edges)]
 }
 
 func unique(data []float64) int {
-	n := len(data) - 1
-	for i := 0; i < n; i++ {
-		for j := i + 1; j <= n; j++ {
-			if data[i] == data[j] {
-				data[j] = data[n]
-				n--
-				j--
-			}
+	n, k := len(data), 0
+	for i := 1; i < n; i++ {
+		if data[k] != data[i] {
+			k++
+			data[k] = data[i]
 		}
 	}
-	return n + 1
+	return k + 1
 }
