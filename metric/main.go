@@ -3,9 +3,9 @@ package metric
 
 import (
 	"math"
-	"sort"
 
 	"github.com/ready-steady/linear/metric"
+	"github.com/ready-steady/sort"
 	"github.com/ready-steady/statistics/distribution"
 )
 
@@ -86,19 +86,5 @@ func detect(data1, data2 []float64) []float64 {
 	copy(edges[1+n1:], data2)
 	edges[1+n1+n2] = -edges[0]
 
-	return edges[:sortUnique(edges)]
-}
-
-func sortUnique(data []float64) int {
-	sort.Float64s(data)
-
-	n, k := len(data), 0
-	for i := 1; i < n; i++ {
-		if data[k] != data[i] {
-			k++
-			data[k] = data[i]
-		}
-	}
-
-	return k + 1
+	return edges[:sort.Unique(edges)]
 }
