@@ -79,21 +79,19 @@ func KullbackLeibler(p, q []float64) float64 {
 
 func detect(data1, data2 []float64) []float64 {
 	n1, n2 := len(data1), len(data2)
-	n := n1 + n2
 
-	edges := make([]float64, n+2)
-
+	edges := make([]float64, 1+n1+n2+1)
 	edges[0] = math.Inf(-1)
 	copy(edges[1:], data1)
 	copy(edges[1+n1:], data2)
-	edges[n+1] = -edges[0]
+	edges[1+n1+n2] = -edges[0]
 
-	sort.Float64s(edges)
-
-	return edges[:unique(edges)]
+	return edges[:sortUnique(edges)]
 }
 
-func unique(data []float64) int {
+func sortUnique(data []float64) int {
+	sort.Float64s(data)
+
 	n, k := len(data), 0
 	for i := 1; i < n; i++ {
 		if data[k] != data[i] {
@@ -101,5 +99,6 @@ func unique(data []float64) int {
 			data[k] = data[i]
 		}
 	}
+
 	return k + 1
 }
