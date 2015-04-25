@@ -1,5 +1,5 @@
-// Package correlation provides functions for working with correlation
-// coefficients and correlation matrices.
+// Package correlation provides tools for working with correlation coefficients
+// and correlation matrices.
 package correlation
 
 import (

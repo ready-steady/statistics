@@ -1,4 +1,4 @@
-// Package metric provides functions for comparing datasets.
+// Package metric provides tools for comparing datasets.
 package metric
 
 import (

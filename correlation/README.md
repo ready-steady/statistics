@@ -1,6 +1,6 @@
 # Correlation
 
-The package provides functions for working with correlation coefficients and
+The package provides tools for working with correlation coefficients and
 correlation matrices.
 
 ## [Documentation][doc]

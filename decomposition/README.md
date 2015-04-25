@@ -1,6 +1,6 @@
 # Decomposition
 
-The package provides algorithms for decomposing data.
+The package provides tools for decomposing data.
 
 ## [Documentation][doc]
 

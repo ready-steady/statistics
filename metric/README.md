@@ -1,6 +1,6 @@
 # Metric
 
-The package provides functions for comparing datasets.
+The package provides tools for comparing datasets.
 
 ## [Documentation][doc]
 

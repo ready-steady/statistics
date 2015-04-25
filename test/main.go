@@ -1,3 +1,4 @@
+// Package test provides statistical tests.
 package test
 
 import (
