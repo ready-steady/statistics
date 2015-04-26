@@ -5,9 +5,7 @@ package distribution
 //
 // https://en.wikipedia.org/wiki/Kahan_summation_algorithm
 func Mean(data []float64) float64 {
-	c := 0.0
-
-	Σ := 0.0
+	Σ, c := 0.0, 0.0
 	for _, x := range data {
 		y := x - c
 		t := Σ + y
@@ -28,8 +26,9 @@ func Variance(data []float64) float64 {
 
 	Σ1, Σ2 := 0.0, 0.0
 	for _, x := range data {
-		Σ1 = Σ1 + (x-μ)*(x-μ)
-		Σ2 = Σ2 + (x - μ)
+		Δ := x - μ
+		Σ1 = Σ1 + Δ*Δ
+		Σ2 = Σ2 + Δ
 	}
 
 	return (Σ1 - Σ2*Σ2/n) / (n - 1)
