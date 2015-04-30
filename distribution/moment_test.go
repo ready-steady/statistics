@@ -6,7 +6,7 @@ import (
 	"github.com/ready-steady/assert"
 )
 
-func TestMean(t *testing.T) {
+func TestExpectation(t *testing.T) {
 	data := []float64{
 		+5.3766713954610001e-01, +1.8338850145950865e+00,
 		-2.2588468610036481e+00, +8.6217332036812055e-01,
@@ -15,7 +15,7 @@ func TestMean(t *testing.T) {
 		+3.5783969397257605e+00, +2.7694370298848772e+00,
 	}
 
-	assert.EqualWithin(Mean(data), 6.2428219709029698e-01, 1e-15, t)
+	assert.EqualWithin(Expectation(data), 6.2428219709029698e-01, 1e-15, t)
 }
 
 func TestVariance(t *testing.T) {

@@ -1,10 +1,10 @@
 package distribution
 
-// Mean computes an estimate of the population mean from a finite sample. The
-// computation is based on the Kahan summation algorithm.
+// Expectation computes an estimate of the population mean from a finite sample.
+// The computation is based on the Kahan summation algorithm.
 //
 // https://en.wikipedia.org/wiki/Kahan_summation_algorithm
-func Mean(data []float64) float64 {
+func Expectation(data []float64) float64 {
 	Σ, c := 0.0, 0.0
 	for _, x := range data {
 		y := x - c
@@ -22,7 +22,7 @@ func Mean(data []float64) float64 {
 //
 // https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Two-pass_algorithm
 func Variance(data []float64) float64 {
-	n, μ := float64(len(data)), Mean(data)
+	n, μ := float64(len(data)), Expectation(data)
 
 	Σ1, Σ2 := 0.0, 0.0
 	for _, x := range data {
