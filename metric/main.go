@@ -86,5 +86,5 @@ func detect(data1, data2 []float64) []float64 {
 	copy(edges[1+n1:], data2)
 	edges[1+n1+n2] = -edges[0]
 
-	return edges[:sort.Unique(edges)]
+	return sort.Unique(edges)
 }
