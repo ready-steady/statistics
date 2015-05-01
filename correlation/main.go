@@ -49,7 +49,7 @@ func Decompose(Σ []float64, m uint, λ float64) ([]float64, uint, error) {
 
 	n := m
 
-	// NOTE: Λ is in descending order and nonnegative.
+	// NOTE: Λ is in the descending order and nonnegative.
 	var cum, sum float64
 	for i := uint(0); i < m; i++ {
 		sum += Λ[i]
