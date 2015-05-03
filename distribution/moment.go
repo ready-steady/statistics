@@ -1,18 +1,11 @@
 package distribution
 
 // Expectation computes an estimate of the population mean from a finite sample.
-// The computation is based on the Kahan summation algorithm.
-//
-// https://en.wikipedia.org/wiki/Kahan_summation_algorithm
 func Expectation(data []float64) float64 {
-	Σ, c := 0.0, 0.0
+	Σ := 0.0
 	for _, x := range data {
-		y := x - c
-		t := Σ + y
-		c = (t - Σ) - y
-		Σ = t
+		Σ += x
 	}
-
 	return Σ / float64(len(data))
 }
 
