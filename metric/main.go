@@ -9,59 +9,6 @@ import (
 	"github.com/ready-steady/statistics/distribution"
 )
 
-// MSE computes the mean-square error.
-//
-// https://en.wikipedia.org/wiki/Mean_squared_error
-func MSE(y, yhat []float64) float64 {
-	Σ := 0.0
-	for i := range y {
-		ε := yhat[i] - y[i]
-		Σ += ε * ε
-	}
-	return Σ / float64(len(y))
-}
-
-// MSPE computes the mean-square-percentage error.
-func MSPE(y, yhat []float64) float64 {
-	Σ := 0.0
-	for i := range y {
-		ε := (yhat[i] - y[i]) / y[i]
-		Σ += ε * ε
-	}
-	return Σ / float64(len(y))
-}
-
-// RMSE computes the root-mean-square error.
-//
-// https://en.wikipedia.org/wiki/Root-mean-square_deviation
-func RMSE(y, yhat []float64) float64 {
-	return math.Sqrt(MSE(y, yhat))
-}
-
-// RMSPE computes the root-mean-square-percentage error.
-func RMSPE(y, yhat []float64) float64 {
-	return math.Sqrt(MSPE(y, yhat))
-}
-
-// NRMSE computes the normalized root-mean-square error.
-//
-// https://en.wikipedia.org/wiki/Root-mean-square_deviation#Normalized_root-mean-square_deviation
-func NRMSE(y, yhat []float64) float64 {
-	count := len(y)
-
-	min, max := y[0], y[0]
-	for i := 1; i < count; i++ {
-		if y[i] < min {
-			min = y[i]
-		}
-		if y[i] > max {
-			max = y[i]
-		}
-	}
-
-	return RMSE(y, yhat) / (max - min)
-}
-
 // KolmogorovSmirnov computes the Kolmogorov–Smirnov statistic for two samples.
 //
 // https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
@@ -88,6 +35,59 @@ func KullbackLeibler(p, q []float64) float64 {
 		}
 	}
 	return divergence
+}
+
+// MSE computes the mean-square error.
+//
+// https://en.wikipedia.org/wiki/Mean_squared_error
+func MSE(y, yhat []float64) float64 {
+	Σ := 0.0
+	for i := range y {
+		ε := yhat[i] - y[i]
+		Σ += ε * ε
+	}
+	return Σ / float64(len(y))
+}
+
+// MSPE computes the mean-square-percentage error.
+func MSPE(y, yhat []float64) float64 {
+	Σ := 0.0
+	for i := range y {
+		ε := (yhat[i] - y[i]) / y[i]
+		Σ += ε * ε
+	}
+	return Σ / float64(len(y))
+}
+
+// NRMSE computes the normalized root-mean-square error.
+//
+// https://en.wikipedia.org/wiki/Root-mean-square_deviation#Normalized_root-mean-square_deviation
+func NRMSE(y, yhat []float64) float64 {
+	count := len(y)
+
+	min, max := y[0], y[0]
+	for i := 1; i < count; i++ {
+		if y[i] < min {
+			min = y[i]
+		}
+		if y[i] > max {
+			max = y[i]
+		}
+	}
+
+	return RMSE(y, yhat) / (max - min)
+}
+
+// RMSE computes the root-mean-square error.
+//
+// https://en.wikipedia.org/wiki/Root-mean-square_deviation
+func RMSE(y, yhat []float64) float64 {
+	return math.Sqrt(MSE(y, yhat))
+}
+
+// RMSPE computes the root-mean-square-percentage error.
+func RMSPE(y, yhat []float64) float64 {
+	return math.Sqrt(MSPE(y, yhat))
 }
 
 func detect(data1, data2 []float64) []float64 {
