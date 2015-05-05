@@ -13,14 +13,12 @@ import (
 //
 // https://en.wikipedia.org/wiki/Mean_squared_error
 func MSE(y, yhat []float64) float64 {
-	var sum, Δ float64
-
+	Σ := 0.0
 	for i := range y {
-		Δ = yhat[i] - y[i]
-		sum += Δ * Δ
+		Δ := yhat[i] - y[i]
+		Σ += Δ * Δ
 	}
-
-	return sum / float64(len(y))
+	return Σ / float64(len(y))
 }
 
 // RMSE computes the root-mean-square error.
