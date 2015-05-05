@@ -15,8 +15,18 @@ import (
 func MSE(y, yhat []float64) float64 {
 	Σ := 0.0
 	for i := range y {
-		Δ := yhat[i] - y[i]
-		Σ += Δ * Δ
+		ε := yhat[i] - y[i]
+		Σ += ε * ε
+	}
+	return Σ / float64(len(y))
+}
+
+// MSPE computes the mean-square-percentage error.
+func MSPE(y, yhat []float64) float64 {
+	Σ := 0.0
+	for i := range y {
+		ε := (yhat[i] - y[i]) / y[i]
+		Σ += ε * ε
 	}
 	return Σ / float64(len(y))
 }
@@ -26,6 +36,11 @@ func MSE(y, yhat []float64) float64 {
 // https://en.wikipedia.org/wiki/Root-mean-square_deviation
 func RMSE(y, yhat []float64) float64 {
 	return math.Sqrt(MSE(y, yhat))
+}
+
+// RMSPE computes the root-mean-square-percentage error.
+func RMSPE(y, yhat []float64) float64 {
+	return math.Sqrt(MSPE(y, yhat))
 }
 
 // NRMSE computes the normalized root-mean-square error.
