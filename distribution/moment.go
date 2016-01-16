@@ -16,13 +16,11 @@ func Expectation(data []float64) float64 {
 // https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Two-pass_algorithm
 func Variance(data []float64) float64 {
 	n, μ := float64(len(data)), Expectation(data)
-
 	Σ1, Σ2 := 0.0, 0.0
 	for _, x := range data {
 		Δ := x - μ
 		Σ1 = Σ1 + Δ*Δ
 		Σ2 = Σ2 + Δ
 	}
-
 	return (Σ1 - Σ2*Σ2/n) / (n - 1)
 }

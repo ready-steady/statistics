@@ -82,6 +82,5 @@ func abs(data []float64) []float64 {
 			data[i] *= -1
 		}
 	}
-
 	return data
 }

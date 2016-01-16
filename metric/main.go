@@ -14,10 +14,8 @@ import (
 // https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
 func KolmogorovSmirnov(data1, data2 []float64) float64 {
 	edges := detect(data1, data2)
-
 	cdf1 := distribution.CDF(data1, edges)
 	cdf2 := distribution.CDF(data2, edges)
-
 	return metric.Uniform(cdf1, cdf2)
 }
 
@@ -64,7 +62,6 @@ func MSPE(y, yhat []float64) float64 {
 // https://en.wikipedia.org/wiki/Root-mean-square_deviation#Normalized_root-mean-square_deviation
 func NRMSE(y, yhat []float64) float64 {
 	count := len(y)
-
 	min, max := y[0], y[0]
 	for i := 1; i < count; i++ {
 		if y[i] < min {
@@ -74,7 +71,6 @@ func NRMSE(y, yhat []float64) float64 {
 			max = y[i]
 		}
 	}
-
 	return RMSE(y, yhat) / (max - min)
 }
 
@@ -92,12 +88,10 @@ func RMSPE(y, yhat []float64) float64 {
 
 func detect(data1, data2 []float64) []float64 {
 	n1, n2 := len(data1), len(data2)
-
 	edges := make([]float64, 1+n1+n2+1)
 	edges[0] = math.Inf(-1)
 	copy(edges[1:], data1)
 	copy(edges[1+n1:], data2)
 	edges[1+n1+n2] = -edges[0]
-
 	return sort.Unique(edges)
 }

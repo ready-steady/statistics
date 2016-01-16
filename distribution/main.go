@@ -27,13 +27,11 @@ func CDF(data, edges []float64) []float64 {
 // assumed to do not.
 func Histogram(data []float64, edges []float64) []uint {
 	bins := make([]uint, len(edges)-1)
-
 	for _, x := range data {
 		if i := find(x, edges); i != -1 {
 			bins[i]++
 		}
 	}
-
 	return bins
 }
 
