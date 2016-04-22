@@ -32,20 +32,25 @@ func KendallPearson(τ []float64) []float64 {
 	return r
 }
 
-// Decompose computes an m-by-n matrix M for an m-by-m covariance matrix Σ such
-// that, for an n-element vector X with uncorrelated components, M * X is an
-// m-element vector whose components are correlated according to Σ. The
-// function reduces the number of dimensions from m to n such that a certain
+// Decompose computes an m-by-n matrix C and an n-by-m matrix D given an m-by-m
+// covariance matrix Σ such that:
+//
+// * for an n-element vector Z with uncorrelated components, C * X is an
+//   m-element vector whose components are correlated according to Σ, and
+//
+// * for an m-element vector X with correlated components according to Σ, D * X
+//   is an n-element vector whose components are uncorrelated.
+//
+// The function reduces the number of dimensions from m to n such that a certain
 // portion of the variance is preserved, which is controlled by λ ∈ (0, 1].
-func Decompose(Σ []float64, m uint, λ float64) ([]float64, uint, error) {
-	U, Λ, err := decomposition.CovPCA(Σ, m, math.Sqrt(math.Nextafter(1, 2)-1))
+func Decompose(Σ []float64, m uint, λ float64) ([]float64, []float64, uint, error) {
+	U, Λ, err := decomposition.CovPCA(Σ, m, math.Sqrt(math.Nextafter(1.0, 2.0)-1.0))
 	if err != nil {
-		return nil, 0, err
+		return nil, nil, 0, err
 	}
 
-	n := m
+	C, n := U, m
 
-	// NOTE: Λ is in the descending order and nonnegative.
 	var cum, sum float64
 	for i := uint(0); i < m; i++ {
 		sum += Λ[i]
@@ -58,12 +63,16 @@ func Decompose(Σ []float64, m uint, λ float64) ([]float64, uint, error) {
 		}
 	}
 
+	D := make([]float64, n*m)
+
 	for i := uint(0); i < n; i++ {
-		coef := math.Sqrt(Λ[i])
+		σ := math.Sqrt(Λ[i])
 		for j := uint(0); j < m; j++ {
-			U[i*m+j] *= coef
+			ρ := C[i*m+j]
+			C[i*m+j] = ρ * σ
+			D[j*n+i] = ρ / σ
 		}
 	}
 
-	return U[:m*n], n, nil
+	return C[:m*n], D, n, nil
 }

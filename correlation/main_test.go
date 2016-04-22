@@ -9,7 +9,7 @@ import (
 func TestDecompose(t *testing.T) {
 	m := uint(5)
 
-	C := []float64{
+	Σ := []float64{
 		+1.000000000000000e+00,
 		+1.154127058177033e-01,
 		+3.134709671301593e-01,
@@ -37,7 +37,7 @@ func TestDecompose(t *testing.T) {
 		+1.000000000000000e+00,
 	}
 
-	expectedM := []float64{
+	expectedC := []float64{
 		-2.809842768614861e-01,
 		+8.627295633325639e-01,
 		-1.214267186196807e-01,
@@ -65,22 +65,63 @@ func TestDecompose(t *testing.T) {
 		-6.572166265854235e-02,
 	}
 
-	M, n, _ := Decompose(C, m, 1)
+	expectedD := []float64{
+		-1.123820829831357e-01,
+		+4.270690437671776e-01,
+		+8.390274190151508e-01,
+		-7.155673852439032e-01,
+		+1.590347846170451e+00,
+		+3.450561236429604e-01,
+		+2.598918527714004e-01,
+		+2.122351773883221e-01,
+		+2.049416988514750e+00,
+		-1.432551745390084e+00,
+		-4.856566253710289e-02,
+		+5.808365927286619e-01,
+		-5.233371129826270e-01,
+		-6.764990347525633e-01,
+		-3.517403047885066e+00,
+		+3.707368353450518e-01,
+		+1.618211666059287e-01,
+		-2.995878311251075e-01,
+		-8.113025376263803e-01,
+		+5.412319202171648e+00,
+		+3.584141906398315e-01,
+		-2.049771513902104e-01,
+		+2.977299309077400e-01,
+		-1.449874857486012e+00,
+		-4.197193598369533e+00,
+	}
+
+	C, D, n, _ := Decompose(Σ, m, 1.0)
 
 	assert.Equal(n, m, t)
-	assert.EqualWithin(abs(M), abs(expectedM), 2e-15, t)
+	assert.EqualWithin(abs(C), abs(expectedC), 1e-14, t)
+	assert.EqualWithin(abs(D), abs(expectedD), 1e-13, t)
 
-	M, n, _ = Decompose(C, m, 0.75)
+	C, D, n, _ = Decompose(Σ, m, 0.75)
 
 	assert.Equal(n, uint(2), t)
-	assert.EqualWithin(abs(M), abs(expectedM[:m*2]), 1e-15, t)
+	assert.EqualWithin(abs(C), abs(expectedC[:m*n]), 1e-14, t)
+	assert.EqualWithin(abs(D), abs(slice(expectedD, m, m, n)), 1e-13, t)
 }
 
 func abs(data []float64) []float64 {
+	data = append(([]float64)(nil), data...)
 	for i := range data {
-		if data[i] < 0 {
-			data[i] *= -1
+		if data[i] < 0.0 {
+			data[i] *= -1.0
 		}
 	}
 	return data
+}
+
+func slice(data []float64, m, n, p uint) []float64 {
+	result := make([]float64, p*n)
+	for i := uint(0); i < p; i++ {
+		for j := uint(0); j < n; j++ {
+			result[j*p+i] = data[j*m+i]
+		}
+	}
+	return result
 }
