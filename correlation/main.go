@@ -8,30 +8,6 @@ import (
 	"github.com/ready-steady/statistics/decomposition"
 )
 
-// SpearmanPearson converts Spearman’s rank correlation coefficient into the
-// Pearson correlation coefficient.
-//
-// https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
-func SpearmanPearson(ρ []float64) []float64 {
-	r := make([]float64, len(ρ))
-	for i := range r {
-		r[i] = 2 * math.Sin(math.Pi*ρ[i]/6)
-	}
-	return r
-}
-
-// KendallPearson converts the Kendall τ rank correlation coefficient into
-// the Pearson correlation coefficient.
-//
-// https://en.wikipedia.org/wiki/Kendall_tau_rank_correlation_coefficient
-func KendallPearson(τ []float64) []float64 {
-	r := make([]float64, len(τ))
-	for i := range r {
-		r[i] = math.Sin(math.Pi * τ[i] / 2)
-	}
-	return r
-}
-
 // Decompose computes an m-by-n matrix C and an n-by-m matrix D given an m-by-m
 // covariance matrix Σ such that (a) for an n-element vector Z with uncorrelated
 // components, C * X is an m-element vector whose components are correlated
@@ -73,4 +49,28 @@ func Decompose(Σ []float64, m uint, λ float64) ([]float64, []float64, uint, er
 	}
 
 	return C[:m*n], D, n, nil
+}
+
+// KendallPearson converts the Kendall τ rank correlation coefficient into
+// the Pearson correlation coefficient.
+//
+// https://en.wikipedia.org/wiki/Kendall_tau_rank_correlation_coefficient
+func KendallPearson(τ []float64) []float64 {
+	r := make([]float64, len(τ))
+	for i := range r {
+		r[i] = math.Sin(math.Pi * τ[i] / 2)
+	}
+	return r
+}
+
+// SpearmanPearson converts Spearman’s rank correlation coefficient into the
+// Pearson correlation coefficient.
+//
+// https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
+func SpearmanPearson(ρ []float64) []float64 {
+	r := make([]float64, len(ρ))
+	for i := range r {
+		r[i] = 2 * math.Sin(math.Pi*ρ[i]/6)
+	}
+	return r
 }
