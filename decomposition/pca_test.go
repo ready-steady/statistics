@@ -7,7 +7,7 @@ import (
 )
 
 func TestCovPCA(t *testing.T) {
-	C := []float64{
+	Σ := []float64{
 		+1.000000000000000e+00,
 		+1.154127058177033e-01,
 		+3.134709671301593e-01,
@@ -71,23 +71,24 @@ func TestCovPCA(t *testing.T) {
 		1.565847777049709e-02,
 	}
 
-	U, Λ, err := CovPCA(C, 5, 0)
+	U, Λ, err := CovPCA(Σ, 5, 0.0)
 
 	assert.Success(err, t)
-	assert.EqualWithin(Λ, expectedΛ, 1e-15, t)
-	assert.EqualWithin(abs(U), abs(expectedU), 1e-15, t)
+	assert.EqualWithin(Λ, expectedΛ, 1e-14, t)
+	assert.EqualWithin(abs(U), abs(expectedU), 1e-14, t)
 }
 
 func TestCovPCAFailure(t *testing.T) {
-	_, _, err := CovPCA([]float64{-1, 0, 0, 0, 1, 0, 0, 0, 1}, 3, 0)
+	_, _, err := CovPCA([]float64{-1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0}, 3, 0.0)
 
 	assert.Failure(err, t)
 }
 
 func abs(data []float64) []float64 {
+	data = append(([]float64)(nil), data...)
 	for i := range data {
-		if data[i] < 0 {
-			data[i] *= -1
+		if data[i] < 0.0 {
+			data[i] *= -1.0
 		}
 	}
 	return data
