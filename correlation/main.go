@@ -33,13 +33,11 @@ func KendallPearson(τ []float64) []float64 {
 }
 
 // Decompose computes an m-by-n matrix C and an n-by-m matrix D given an m-by-m
-// covariance matrix Σ such that:
-//
-// * for an n-element vector Z with uncorrelated components, C * X is an
-//   m-element vector whose components are correlated according to Σ, and
-//
-// * for an m-element vector X with correlated components according to Σ, D * X
-//   is an n-element vector whose components are uncorrelated.
+// covariance matrix Σ such that (a) for an n-element vector Z with uncorrelated
+// components, C * X is an m-element vector whose components are correlated
+// according to Σ, and (b) for an m-element vector X with correlated components
+// according to Σ, D * X is an n-element vector whose components are
+// uncorrelated.
 //
 // The function reduces the number of dimensions from m to n such that a certain
 // portion of the variance is preserved, which is controlled by λ ∈ (0, 1].
