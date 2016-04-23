@@ -107,7 +107,7 @@ func TestDecompose(t *testing.T) {
 }
 
 func abs(data []float64) []float64 {
-	data = append(([]float64)(nil), data...)
+	data = append([]float64(nil), data...)
 	for i := range data {
 		if data[i] < 0.0 {
 			data[i] *= -1.0
