@@ -59,7 +59,7 @@ func Decompose(Σ []float64, m uint, λ, ε float64) ([]float64, []float64, uint
 func KendallPearson(τ []float64) []float64 {
 	r := make([]float64, len(τ))
 	for i := range r {
-		r[i] = math.Sin(math.Pi * τ[i] / 2)
+		r[i] = math.Sin(math.Pi * τ[i] / 2.0)
 	}
 	return r
 }
@@ -71,7 +71,7 @@ func KendallPearson(τ []float64) []float64 {
 func SpearmanPearson(ρ []float64) []float64 {
 	r := make([]float64, len(ρ))
 	for i := range r {
-		r[i] = 2 * math.Sin(math.Pi*ρ[i]/6)
+		r[i] = 2.0 * math.Sin(math.Pi*ρ[i]/6.0)
 	}
 	return r
 }
