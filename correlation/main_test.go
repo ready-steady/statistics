@@ -1,6 +1,7 @@
 package correlation
 
 import (
+	"math"
 	"testing"
 
 	"github.com/ready-steady/assert"
@@ -8,6 +9,7 @@ import (
 
 func TestDecompose(t *testing.T) {
 	m := uint(5)
+	ε := math.Sqrt(math.Nextafter(1.0, 2.0) - 1.0)
 
 	Σ := []float64{
 		+1.000000000000000e+00,
@@ -93,13 +95,13 @@ func TestDecompose(t *testing.T) {
 		-4.197193598369533e+00,
 	}
 
-	C, D, n, _ := Decompose(Σ, m, 1.0)
+	C, D, n, _ := Decompose(Σ, m, 1.0, ε)
 
 	assert.Equal(n, m, t)
 	assert.EqualWithin(abs(C), abs(expectedC), 1e-14, t)
 	assert.EqualWithin(abs(D), abs(expectedD), 1e-13, t)
 
-	C, D, n, _ = Decompose(Σ, m, 0.75)
+	C, D, n, _ = Decompose(Σ, m, 0.75, ε)
 
 	assert.Equal(n, uint(2), t)
 	assert.EqualWithin(abs(C), abs(expectedC[:m*n]), 1e-14, t)

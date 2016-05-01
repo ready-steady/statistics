@@ -2,49 +2,55 @@
 package distribution
 
 // CDF calculates an empirical cumulative distribution function. The granularity
-// of the function is specified by a set of edges. For n edges, the function
-// returns (n-1) points (see Histogram).
-func CDF(data, edges []float64) []float64 {
-	bins := Histogram(data, edges)
-
+// of the function is specified by a set of edges; see Histogram.
+func CDF(data, edges []float64) (values []float64) {
+	bins, _ := Histogram(data, edges)
 	total := uint(0)
 	for i, count := range bins {
 		total += count
 		bins[i] = total
 	}
-
-	values := make([]float64, len(bins))
+	values = make([]float64, len(bins))
 	for i := range values {
 		values[i] = float64(bins[i]) / float64(total)
 	}
-
-	return values
+	return
 }
 
 // Histogram counts the number of points that fall into each of the bins
 // specified by a set of edges. For n edges, the number of bins is (n-1). The
 // left endpoint of a bin is assumed to belong to the bin while the right one is
 // assumed to do not.
-func Histogram(data []float64, edges []float64) []uint {
-	bins := make([]uint, len(edges)-1)
+func Histogram(data []float64, edges []float64) (bins []uint, total uint) {
+	bins = make([]uint, len(edges)-1)
 	for _, x := range data {
 		if i := find(x, edges); i != -1 {
 			bins[i]++
+			total++
 		}
 	}
-	return bins
+	return
+}
+
+// PDF calculates an empirical probability density function. The granularity of
+// the function is specified by a set of edges; see Histogram.
+func PDF(data, edges []float64) (values []float64) {
+	bins, total := Histogram(data, edges)
+	values = make([]float64, len(bins))
+	for i := range values {
+		values[i] = float64(bins[i]) / float64(total)
+	}
+	return
 }
 
 func find(x float64, edges []float64) int {
 	lower, upper := 0, len(edges)-1
-
 	if x < edges[lower] {
 		return -1
 	}
 	if x >= edges[upper] {
 		return -1
 	}
-
 	for upper-lower > 1 {
 		middle := (upper + lower) / 2
 
@@ -54,6 +60,5 @@ func find(x float64, edges []float64) int {
 			upper = middle
 		}
 	}
-
 	return lower
 }

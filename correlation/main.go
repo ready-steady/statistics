@@ -16,9 +16,10 @@ import (
 // uncorrelated.
 //
 // The function reduces the number of dimensions from m to n such that a certain
-// portion of the variance is preserved, which is controlled by λ ∈ (0, 1].
-func Decompose(Σ []float64, m uint, λ float64) ([]float64, []float64, uint, error) {
-	U, Λ, err := decomposition.CovPCA(Σ, m, math.Sqrt(math.Nextafter(1.0, 2.0)-1.0))
+// portion of the variance is preserved, which is controlled by λ ∈ (0, 1]. For
+// the meaning of the ε parameter, refer to decomposition.PCA.
+func Decompose(Σ []float64, m uint, λ, ε float64) ([]float64, []float64, uint, error) {
+	U, Λ, err := decomposition.CovPCA(Σ, m, ε)
 	if err != nil {
 		return nil, nil, 0, err
 	}
