@@ -95,12 +95,12 @@ func TestDecompose(t *testing.T) {
 		-4.197193598369533e+00,
 	}
 
-	C, D, _, _ := Decompose(Σ, m, 1.0, ε)
+	C, D, _, _, _ := Decompose(Σ, m, 1.0, ε)
 
 	assert.EqualWithin(abs(C), abs(expectedC), 1e-14, t)
 	assert.EqualWithin(abs(D), abs(expectedD), 1e-13, t)
 
-	C, D, _, _ = Decompose(Σ, m, 0.75, ε)
+	C, D, _, _, _ = Decompose(Σ, m, 0.75, ε)
 
 	assert.EqualWithin(abs(C), abs(expectedC[:m*2]), 1e-14, t)
 	assert.EqualWithin(abs(D), abs(slice(expectedD, m, m, 2)), 1e-13, t)
