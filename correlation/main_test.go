@@ -95,17 +95,15 @@ func TestDecompose(t *testing.T) {
 		-4.197193598369533e+00,
 	}
 
-	C, D, n, _ := Decompose(Σ, m, 1.0, ε)
+	C, D, _, _ := Decompose(Σ, m, 1.0, ε)
 
-	assert.Equal(n, m, t)
 	assert.EqualWithin(abs(C), abs(expectedC), 1e-14, t)
 	assert.EqualWithin(abs(D), abs(expectedD), 1e-13, t)
 
-	C, D, n, _ = Decompose(Σ, m, 0.75, ε)
+	C, D, _, _ = Decompose(Σ, m, 0.75, ε)
 
-	assert.Equal(n, uint(2), t)
-	assert.EqualWithin(abs(C), abs(expectedC[:m*n]), 1e-14, t)
-	assert.EqualWithin(abs(D), abs(slice(expectedD, m, m, n)), 1e-13, t)
+	assert.EqualWithin(abs(C), abs(expectedC[:m*2]), 1e-14, t)
+	assert.EqualWithin(abs(D), abs(slice(expectedD, m, m, 2)), 1e-13, t)
 }
 
 func abs(data []float64) []float64 {
