@@ -24,9 +24,9 @@ func CovPCA(Σ []float64, m uint, ε float64) (U []float64, Λ []float64, err er
 	}
 
 	for i := uint(0); i < m; i++ {
-		if Λ[i] < 0 {
+		if Λ[i] < 0.0 {
 			if -Λ[i] < ε {
-				Λ[i] = 0
+				Λ[i] = 0.0
 			} else {
 				return nil, nil, errors.New("the matrix should be positive semidefinite")
 			}
