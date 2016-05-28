@@ -19,8 +19,8 @@ func Variance(data []float64) float64 {
 	Σ1, Σ2 := 0.0, 0.0
 	for _, x := range data {
 		Δ := x - μ
-		Σ1 = Σ1 + Δ*Δ
-		Σ2 = Σ2 + Δ
+		Σ1 += Δ
+		Σ2 += Δ * Δ
 	}
-	return (Σ1 - Σ2*Σ2/n) / (n - 1)
+	return (Σ2 - Σ1*Σ1/n) / (n - 1.0)
 }
