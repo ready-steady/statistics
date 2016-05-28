@@ -1,14 +1,15 @@
 # Statistics [![Status][status-img]][status-url]
 
-The repository hosts five packages:
+The repository hosts the following packages:
 
 * [correlation](correlation),
 * [decomposition](decomposition),
 * [distribution](distribution),
-* [metric](metric), and
+* [metric](metric),
+* [regression](regression), and
 * [test](test).
 
-## Contributing
+## Contribution
 
 1. Fork the project.
 2. Implement your idea.
