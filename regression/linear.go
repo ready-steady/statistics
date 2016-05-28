@@ -29,5 +29,5 @@ func NewSimpleLinear(x, y []float64) *SimpleLinear {
 
 // Compute evaluate the model at a point.
 func (self *SimpleLinear) Compute(x float64) float64 {
-	return self.α*x + self.β
+	return self.α + self.β*x
 }
