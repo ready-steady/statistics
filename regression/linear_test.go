@@ -6,7 +6,7 @@ import (
 	"github.com/ready-steady/assert"
 )
 
-func TestSimpleLinearCompute(t *testing.T) {
+func TestSimpleLinearNew(t *testing.T) {
 	x := []float64{
 		3.181500e+02,
 		3.281500e+02,
@@ -32,6 +32,6 @@ func TestSimpleLinearCompute(t *testing.T) {
 
 	model := NewSimpleLinear(x, y)
 
-	assert.EqualWithin(model.α, 0.0, 1e-15, t)
-	assert.EqualWithin(model.β, 0.0, 1e-15, t)
+	assert.EqualWithin(model.α, -4.7845715178610932e+00, 1e-12, t)
+	assert.EqualWithin(model.β, +1.6395978333333290e-02, 1e-12, t)
 }
