@@ -26,6 +26,14 @@ func TestHistogram(t *testing.T) {
 	assert.Equal(bins, result, t)
 }
 
+func TestEdges(t *testing.T) {
+	data1 := []float64{1.0, infinity, 2.0, 0.0}
+	data2 := []float64{0.0, 2.0, 4.0, 1.0, 1.0, 1.0, 4.0}
+	edges := []float64{-infinity, 0.0, 1.0, 2.0, 4.0, infinity}
+
+	assert.Equal(Edges(data1, data2), edges, t)
+}
+
 func TestFind(t *testing.T) {
 	edges := []float64{-2.0, -1.0, 0.0, 1.0, 2.0}
 

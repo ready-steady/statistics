@@ -5,19 +5,14 @@ import (
 	"math"
 
 	"github.com/ready-steady/linear/metric"
-	"github.com/ready-steady/sort"
 	"github.com/ready-steady/statistics/distribution"
-)
-
-var (
-	infinity = math.Inf(1.0)
 )
 
 // KolmogorovSmirnov computes the Kolmogorov–Smirnov statistic for two samples.
 //
 // https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
 func KolmogorovSmirnov(data1, data2 []float64) float64 {
-	edges := detect(data1, data2)
+	edges := distribution.Edges(data1, data2)
 	cdf1 := distribution.CDF(data1, edges)
 	cdf2 := distribution.CDF(data2, edges)
 	return metric.Uniform(cdf1, cdf2)
@@ -88,14 +83,4 @@ func RMSE(y, yhat []float64) float64 {
 // RMSPE computes the root-mean-square-percentage error.
 func RMSPE(y, yhat []float64) float64 {
 	return math.Sqrt(MSPE(y, yhat))
-}
-
-func detect(data1, data2 []float64) []float64 {
-	n1, n2 := len(data1), len(data2)
-	edges := make([]float64, 1+n1+n2+1)
-	edges[0] = -infinity
-	copy(edges[1:], data1)
-	copy(edges[1+n1:], data2)
-	edges[1+n1+n2] = infinity
-	return sort.Unique(edges)
 }
