@@ -15,7 +15,7 @@ func TestExpectation(t *testing.T) {
 		+3.5783969397257605e+00, +2.7694370298848772e+00,
 	}
 
-	assert.EqualWithin(Expectation(data), 6.2428219709029698e-01, 1e-15, t)
+	assert.Close(Expectation(data), 6.2428219709029698e-01, 1e-15, t)
 }
 
 func TestVariance(t *testing.T) {
@@ -27,5 +27,5 @@ func TestVariance(t *testing.T) {
 		+3.5783969397257605e+00, +2.7694370298848772e+00,
 	}
 
-	assert.EqualWithin(Variance(data), 3.1324921339484746e+00, 1e-15, t)
+	assert.Close(Variance(data), 3.1324921339484746e+00, 1e-15, t)
 }

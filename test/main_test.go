@@ -36,8 +36,8 @@ func TestKolmogorovSmirnovGaussian(t *testing.T) {
 	rejected, pvalue, statistic := KolmogorovSmirnov(data1, data2, 0.05)
 
 	assert.Equal(rejected, false, t)
-	assert.EqualWithin(pvalue, 7.7095294467658659e-01, 1e-15, t)
-	assert.EqualWithin(statistic, 2.0000000000000007e-01, 1e-15, t)
+	assert.Close(pvalue, 7.7095294467658659e-01, 1e-15, t)
+	assert.Close(statistic, 2.0000000000000007e-01, 1e-15, t)
 }
 
 func TestKolmogorovSmirnovWeibull(t *testing.T) {
@@ -100,6 +100,6 @@ func TestKolmogorovSmirnovWeibull(t *testing.T) {
 	rejected, pvalue, statistic := KolmogorovSmirnov(data1, data2, 0.01)
 
 	assert.Equal(rejected, false, t)
-	assert.EqualWithin(pvalue, 3.1660846051790786e-02, 1e-15, t)
-	assert.EqualWithin(statistic, 2.7999999999999997e-01, 1e-15, t)
+	assert.Close(pvalue, 3.1660846051790786e-02, 1e-15, t)
+	assert.Close(statistic, 2.7999999999999997e-01, 1e-15, t)
 }

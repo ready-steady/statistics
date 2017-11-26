@@ -32,6 +32,6 @@ func TestSimpleLinearNew(t *testing.T) {
 
 	model := NewSimpleLinear(x, y)
 
-	assert.EqualWithin(model.α, -4.7845715178610932e+00, 1e-12, t)
-	assert.EqualWithin(model.β, +1.6395978333333290e-02, 1e-12, t)
+	assert.Close(model.α, -4.7845715178610932e+00, 1e-12, t)
+	assert.Close(model.β, +1.6395978333333290e-02, 1e-12, t)
 }
